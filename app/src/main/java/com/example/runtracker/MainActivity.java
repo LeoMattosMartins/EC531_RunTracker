@@ -93,8 +93,8 @@ public class MainActivity extends AppCompatActivity {
     // Method to start location updates
     private void startLocationUpdates() {
         try {
-            // Request location updates every 5000 milliseconds or every 10 meters change
-            locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 5000, 10, locationListener);
+            // Request location updates every 1 second or every 1 meter change
+            locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 1000, 1, locationListener);
         } catch (SecurityException e) {
             e.printStackTrace();
         }
