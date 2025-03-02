@@ -68,8 +68,9 @@ public class MainActivity extends AppCompatActivity {
                 lastLocation = location;
 
                 // Update the TextView with latitude, longitude, and calculated speed
-                locationTextView.setText("Lat: " + latitude +
-                        "\nLng: " + longitude +
+                locationTextView.setText(
+                        "Lat: " + String.format("%.4f", latitude) +
+                        "\nLng: " + String.format("%.4f", longitude) +
                         "\nSpeed: " + String.format("%.2f", speedMph) + " mph");
             }
 
