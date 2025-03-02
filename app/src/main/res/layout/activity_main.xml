@@ -4,11 +4,30 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <!-- TextView for Latitude and Longitude -->
     <TextView
         android:id="@+id/locationTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Location info will appear here"
-        android:textSize="20sp"
-        android:layout_centerInParent="true"/>
+        android:text="Location will appear here"
+        android:textSize="30sp"
+        android:textColor="@color/black"
+        android:textStyle="bold"
+        android:layout_centerInParent="true"
+        android:fontFamily="@font/digital7"/>
+
+    <!-- TextView for Speed -->
+    <TextView
+        android:id="@+id/speedTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Speed will appear here"
+        android:textSize="30sp"
+        android:textColor="@color/black"
+        android:textStyle="bold"
+        android:layout_below="@id/locationTextView"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="20dp"
+        android:fontFamily="@font/digital7"/>
+
 </RelativeLayout>

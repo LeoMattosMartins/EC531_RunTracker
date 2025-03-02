@@ -19,6 +19,7 @@ public class MainActivity extends AppCompatActivity {
     private LocationManager locationManager;
     private LocationListener locationListener;
     private TextView locationTextView;
+    private TextView speedTextView;
     private static final int LOCATION_PERMISSION_REQUEST_CODE = 1;
 
     @Override
@@ -26,7 +27,9 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        // Get both TextViews from the layout
         locationTextView = findViewById(R.id.locationTextView);
+        speedTextView = findViewById(R.id.speedTextView);
         locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
 
         // Create a LocationListener to get location updates
@@ -45,11 +48,22 @@ public class MainActivity extends AppCompatActivity {
                 System.out.println("Speed: " + speedMph);
                 System.out.println("hasSpeed: " + hasSpeed);
 
-                // Update the TextView with latitude, longitude, and calculated speed
+                // Update the location TextView with latitude and longitude
                 locationTextView.setText(
                         "Lat: " + String.format("%.8f", latitude) + "°" +
-                        "\nLng: " + String.format("%.8f", longitude) + "°" +
-                        "\nSpeed: " + String.format("%.3f", speedMph) + " mph");
+                        "\nLng: " + String.format("%.8f", longitude) + "°");
+
+                // Update the speed TextView with speed
+                speedTextView.setText("Speed: " + String.format("%.3f", speedMph) + " mph");
+
+                // Change the color of the speed TextView based on the speed value
+                if (speedMph < 33) {
+                    speedTextView.setTextColor(ContextCompat.getColor(MainActivity.this, android.R.color.holo_green_dark));
+                } else if (speedMph < 66) {
+                    speedTextView.setTextColor(ContextCompat.getColor(MainActivity.this, android.R.color.holo_orange_dark));
+                } else {
+                    speedTextView.setTextColor(ContextCompat.getColor(MainActivity.this, android.R.color.holo_red_dark));
+                }
             }
 
             @Override
