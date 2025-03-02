@@ -8,6 +8,7 @@ import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
+import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -20,16 +21,21 @@ public class MainActivity extends AppCompatActivity {
     private LocationListener locationListener;
     private TextView locationTextView;
     private TextView speedTextView;
+    private Button pauseButton;
+    private boolean isPaused = false;
     private static final int LOCATION_PERMISSION_REQUEST_CODE = 1;
 
+    @SuppressLint("SetTextI18n")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        // Get both TextViews from the layout
+        // Get the TextViews and Button from the layout
         locationTextView = findViewById(R.id.locationTextView);
         speedTextView = findViewById(R.id.speedTextView);
+        pauseButton = findViewById(R.id.pauseButton);
+
         locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
 
         // Create a LocationListener to get location updates
@@ -37,16 +43,10 @@ public class MainActivity extends AppCompatActivity {
             @SuppressLint({"SetTextI18n", "DefaultLocale"})
             @Override
             public void onLocationChanged(@NonNull Location location) {
-                // Current coordinates
+                // Get current coordinates
                 double latitude = location.getLatitude();
                 double longitude = location.getLongitude();
                 double speedMph = location.getSpeed() * 2.23694;
-                boolean hasSpeed = location.hasSpeed();
-
-                System.out.println("Latitude: " + latitude);
-                System.out.println("Longitude: " + longitude);
-                System.out.println("Speed: " + speedMph);
-                System.out.println("hasSpeed: " + hasSpeed);
 
                 // Update the location TextView with latitude and longitude
                 locationTextView.setText(
@@ -76,7 +76,7 @@ public class MainActivity extends AppCompatActivity {
             public void onProviderDisabled(@NonNull String provider) { }
         };
 
-        // Check if the location permission is granted
+        // Check for location permission
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
                 != PackageManager.PERMISSION_GRANTED) {
             // Request permission if not granted
@@ -87,6 +87,21 @@ public class MainActivity extends AppCompatActivity {
             // Permission granted, start receiving location updates
             startLocationUpdates();
         }
+
+        // Set up the pause button to toggle location updates
+        pauseButton.setOnClickListener(v -> {
+            if (!isPaused) {
+                // Pause location updates
+                locationManager.removeUpdates(locationListener);
+                pauseButton.setText("Resume");
+                isPaused = true;
+            } else {
+                // Resume location updates
+                startLocationUpdates();
+                pauseButton.setText("Pause");
+                isPaused = false;
+            }
+        });
     }
 
     // Callback for the result from requesting permissions
@@ -95,7 +110,6 @@ public class MainActivity extends AppCompatActivity {
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         if (requestCode == LOCATION_PERMISSION_REQUEST_CODE) {
-            // If permission is granted, start location updates
             if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                 startLocationUpdates();
             } else {

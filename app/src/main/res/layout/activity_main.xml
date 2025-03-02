@@ -14,7 +14,7 @@
         android:textColor="@color/black"
         android:textStyle="bold"
         android:layout_centerInParent="true"
-        android:fontFamily="@font/digital7"/>
+        android:fontFamily="@font/digital7mono" />
 
     <!-- TextView for Speed -->
     <TextView
@@ -28,6 +28,17 @@
         android:layout_below="@id/locationTextView"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="20dp"
-        android:fontFamily="@font/digital7"/>
+        android:fontFamily="@font/digital7mono" />
+
+    <!-- Pause/Resume Button -->
+    <Button
+        android:id="@+id/pauseButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Pause"
+        android:layout_below="@id/speedTextView"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="20dp"
+        android:fontFamily="@font/digital7mono" />
 
 </RelativeLayout>
