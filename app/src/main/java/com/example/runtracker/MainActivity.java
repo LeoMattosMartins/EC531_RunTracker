@@ -78,10 +78,10 @@ public class MainActivity extends AppCompatActivity {
             public void onStatusChanged(String provider, int status, Bundle extras) { }
 
             @Override
-            public void onProviderEnabled(String provider) { }
+            public void onProviderEnabled(@NonNull String provider) { }
 
             @Override
-            public void onProviderDisabled(String provider) { }
+            public void onProviderDisabled(@NonNull String provider) { }
         };
 
         // Check if the location permission is granted
@@ -98,8 +98,10 @@ public class MainActivity extends AppCompatActivity {
     }
 
     // Callback for the result from requesting permissions
+    @SuppressLint("SetTextI18n")
     @Override
-    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         if (requestCode == LOCATION_PERMISSION_REQUEST_CODE) {
             // If permission is granted, start location updates
             if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
